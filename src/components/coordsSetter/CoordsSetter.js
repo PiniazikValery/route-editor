@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
+import { connect } from "react-redux";
+import { addCoord } from '../../actions'
 
-function CoordsSetter() {
+const CoordsSetter = memo(({ dispatch }) => {
     const [coordName, setCoordName] = useState('');
     const [lng, setLng] = useState('');
     const [lat, setLat] = useState('');
@@ -22,7 +24,7 @@ function CoordsSetter() {
     }
 
     const onSubmit = event => {
-        alert(`lng:${lng},lat:${lat}`)
+        dispatch(addCoord(coordName, lat, lng));
         event.preventDefault();
     }
 
@@ -36,9 +38,9 @@ function CoordsSetter() {
             <input onChange={handleChangeLat} value={lat} placeholder="Широта"></input>
             <br />
             <br />
-            <button type="submit">Добавить координату</button>
+            <input type="submit" value="Добавить координату" />
         </form>
     );
-}
+});
 
-export default CoordsSetter;
+export default connect()(CoordsSetter);

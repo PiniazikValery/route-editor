@@ -2,13 +2,10 @@ import { CONSTANTS } from '../actions';
 
 const initialState = [];
 
-const uuid = () => ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
-
 const coordsReducer = (state = initialState, action) => {
     switch (action.type) {
         case CONSTANTS.ADD_COORD: {
-            const { name, lat, lng } = action.payload;
-            const id = uuid();
+            const { id, name, lat, lng } = action.payload;
             const newCoord = {
                 name,
                 lat,
@@ -20,7 +17,14 @@ const coordsReducer = (state = initialState, action) => {
         case CONSTANTS.DELETE_COORD: {
             const { id } = action.payload;
             const newState = state;
-            delete newState[id];
+            const actionIndex = newState.splice(newState.findIndex(x => x.id === id), 1);
+            return [...newState.slice(0, actionIndex), ...newState.slice(actionIndex + 1)];
+        }
+        case CONSTANTS.DND_COORD: {
+            const { startIndex, endIndex } = action.payload;
+            const newState = state;
+            const [removed] = newState.splice(startIndex, 1);
+            newState.splice(endIndex, 0, removed);
             return newState;
         }
         default: {
