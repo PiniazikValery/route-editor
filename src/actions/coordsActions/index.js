@@ -1,4 +1,4 @@
-import { CONSTANTS } from '../../actions'
+import { CONSTANTS } from '../../actions';
 import uuid from 'uuidv4';
 
 export const addCoord = (name, lat, lng) => {
@@ -7,6 +7,13 @@ export const addCoord = (name, lat, lng) => {
         type: CONSTANTS.ADD_COORD,
         payload: { id, name, lat, lng }
     };
+}
+
+export const editCoord = (id, name, lat, lng) => {
+    return {
+        type: CONSTANTS.EDIT_COORD,
+        payload: { id, name, lat, lng }
+    }
 }
 
 export const deleteCoord = (id) => {
