@@ -22,7 +22,7 @@ const ListOfCoords = memo(({ coords, dispatch }) => {
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                     >
-                        {coords.map((coord, index) => (
+                        {coords.present.present.map((coord, index) => (
                             <Draggable key={coord.id} draggableId={coord.id} index={index}>
                                 {(provided) => (
                                     <div

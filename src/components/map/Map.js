@@ -1,7 +1,8 @@
 import React, { useEffect, useState, memo } from 'react';
 import { YMap } from './StyledComps';
 import { connect } from 'react-redux';
-import { editCoord, deleteCoord } from '../../actions';
+import { editCoord, CONSTANTS } from '../../actions';
+import { ActionCreators as UndoActionCreators } from 'redux-undo';
 
 const Map = memo(({ coords, yMaps, dispatch }) => {
 
@@ -24,37 +25,46 @@ const Map = memo(({ coords, yMaps, dispatch }) => {
         if (routes.length > 1) {
             yMaps.route(toYandexRoutes(routes)).then(
                 route => {
-                    const points = route.getWayPoints();
+                    const points = setLocationBalloon(route.getWayPoints());
                     for (let i = 0; i < points.getLength(); i++) {
-                        yMaps.geocode(points.get(i).geometry.getCoordinates()).then(res => {
-                            points.get(i).options.set({
-                                balloonContentLayout: yMaps.templateLayoutFactory.createClass(
-                                    `<span>${res.geoObjects.get(0).getAddressLine()}</span>`
-                                )
-                            });
-                        });
                         points.get(i).events.add('dragend', (e) => onDragEndCoord(routes[i].id, e));
                     }
                     route.editor.start({ addViaPoints: false });
                     map.geoObjects.removeAll();
                     map.geoObjects.add(route);
                     var geocoder = yMaps.geocode(toYandexRoutes(routes)[routes.length - 1]);
-                    geocoder.then(res => {
-                        map.setCenter(
-                            res.geoObjects.get(0).geometry.getCoordinates(),
-                            7
-                        );
-                    });
+                    if (coords.present.lastAction === CONSTANTS.ADD_COORD) {
+                        geocoder.then(res => {
+                            map.setCenter(
+                                res.geoObjects.get(0).geometry.getCoordinates(),
+                                7
+                            );
+                        });
+                    }
                 },
 
                 error => {
-                    dispatch(deleteCoord(routes[routes.length - 1].id));
                     alert('error: ' + error.message);
+                    dispatch(UndoActionCreators.undo());
                 }
             );
         } else {
             map.geoObjects.removeAll();
         }
+    }
+
+    const setLocationBalloon = (wayPoints) => {
+        let resultWayPoints = wayPoints;
+        for (let i = 0; i < resultWayPoints.getLength(); i++) {
+            yMaps.geocode(resultWayPoints.get(i).geometry.getCoordinates()).then(res => {
+                resultWayPoints.get(i).options.set({
+                    balloonContentLayout: yMaps.templateLayoutFactory.createClass(
+                        `<span>${res.geoObjects.get(0).getAddressLine()}</span>`
+                    )
+                });
+            });
+        }
+        return resultWayPoints;
     }
 
     const onDragEndCoord = (id, event) => {
@@ -75,7 +85,7 @@ const Map = memo(({ coords, yMaps, dispatch }) => {
     return (
         <div>
             <YMap id="map" key="map" />
-            {map ? renderRoutes(coords) : undefined}
+            {map ? renderRoutes(coords.present.present) : undefined}
         </div>
     );
 });
