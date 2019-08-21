@@ -32,15 +32,7 @@ const Map = memo(({ coords, yMaps, dispatch }) => {
                     route.editor.start({ addViaPoints: false });
                     map.geoObjects.removeAll();
                     map.geoObjects.add(route);
-                    var geocoder = yMaps.geocode(toYandexRoutes(routes)[routes.length - 1]);
-                    if (coords.present.lastAction === CONSTANTS.ADD_COORD) {
-                        geocoder.then(res => {
-                            map.setCenter(
-                                res.geoObjects.get(0).geometry.getCoordinates(),
-                                7
-                            );
-                        });
-                    }
+                    setMapCenter(routes);
                 },
 
                 error => {
@@ -50,6 +42,23 @@ const Map = memo(({ coords, yMaps, dispatch }) => {
             );
         } else {
             map.geoObjects.removeAll();
+        }
+    }
+
+    const setMapCenter = (routes) => {
+        switch (true) {
+            case coords.present.lastAction === CONSTANTS.ADD_COORD: {
+                const geocoder = yMaps.geocode(toYandexRoutes(routes)[routes.length - 1]);
+                geocoder.then(res => {
+                    map.setCenter(
+                        res.geoObjects.get(0).geometry.getCoordinates(),
+                        7
+                    );
+                });
+                break;
+            }
+            default:
+                break;
         }
     }
 

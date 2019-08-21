@@ -1,6 +1,5 @@
 import React, { memo, useEffect } from 'react';
-import { CoordsSetter } from './components/coordsSetter'
-import { ListOfCoords } from './components/listOfCoords';
+import { RouteEditor } from './components/routeEditor';
 import { Map } from './components/map';
 import { connect } from 'react-redux';
 import { ApiInitializer } from './additionalApi';
@@ -14,8 +13,7 @@ const App = memo(({ dispatch }) => {
 
   return (
     <div>
-      <CoordsSetter />
-      <ListOfCoords />
+      <RouteEditor />
       <Map />
     </div>
   );
