@@ -1,18 +1,19 @@
 import React, { memo } from 'react';
 import { connect } from 'react-redux';
 import { deleteCoord } from '../../actions';
+import { CoordItemBox, DeleteButton } from './StyledComps';
 
-const CoordItem = memo(({ dispatch, name, lng, lat, id }) => {
+const CoordItem = memo(({ dispatch, name, id }) => {
 
     const onDeleteItem = () => {
         dispatch(deleteCoord(id));
     }
 
     return (
-        <div>
-            <label>{`Имя: ${name}; долгота:${lng}; широта: ${lat}`}</ label>
-            <button onClick={onDeleteItem}>Удалить</button>
-        </div>
+        <CoordItemBox>
+            <label>{name}</ label>
+            <DeleteButton onClick={onDeleteItem} />
+        </CoordItemBox>
     );
 });
 

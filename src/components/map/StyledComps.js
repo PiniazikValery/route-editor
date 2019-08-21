@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const YMap = styled.div`
-    width: 80%;
+    position: relative;
+    width: 100%;
     height: 100vh;
 `
