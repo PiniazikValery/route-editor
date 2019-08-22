@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { addCoord } from '../../actions';
 import { CoordSetterForm, NewNodeInput } from './StyledComps';
 
-const CoordsSetter = memo(({ dispatch, yMaps }) => {
+const CoordsSetter = memo(({ dispatch, yMaps, mobile }) => {
     const [coordName, setCoordName] = useState('');
 
     const handleChangeCoordName = event => {
@@ -40,7 +40,7 @@ const CoordsSetter = memo(({ dispatch, yMaps }) => {
     }
 
     return (
-        <CoordSetterForm>
+        <CoordSetterForm mobile={mobile}>
             <NewNodeInput onKeyDown={onSubmit} onChange={handleChangeCoordName} value={coordName} placeholder="New node" />
         </CoordSetterForm>
     );
