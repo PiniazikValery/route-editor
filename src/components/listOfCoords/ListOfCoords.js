@@ -5,7 +5,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { DragDropContextHolder } from './StyledComps';
 import { dndCoord } from '../../actions';
 
-const ListOfCoords = memo(({ coords, dispatch }) => {
+const ListOfCoords = memo(({ coords, dispatch, mobile }) => {
     const onDragEnd = (result) => {
         if (!result.destination) {
             return;
@@ -16,7 +16,7 @@ const ListOfCoords = memo(({ coords, dispatch }) => {
         ));
     }
     return (
-        <DragDropContextHolder>
+        <DragDropContextHolder mobile={mobile}>
             <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable droppableId="droppable">
                     {(provided) => (
@@ -33,6 +33,7 @@ const ListOfCoords = memo(({ coords, dispatch }) => {
                                             {...provided.dragHandleProps}
                                         >
                                             <CoordItem
+                                                mobile={mobile}
                                                 key={coord.id}
                                                 name={coord.name}
                                                 id={coord.id}
