@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Icon from '@material-ui/icons/Delete';
 
 export const CoordItemBox = styled.div`
+    white-space: nowrap;
     border-radius: 10px;
     margin-top: 5px;
     margin-bottom: 5px;

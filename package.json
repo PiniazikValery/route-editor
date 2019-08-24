@@ -6,7 +6,6 @@
   "dependencies": {
     "@material-ui/core": "^4.3.3",
     "@material-ui/icons": "^4.2.1",
-    "gh-pages": "^2.1.1",
     "react": "^16.9.0",
     "react-beautiful-dnd": "^11.0.5",
     "react-dom": "^16.9.0",
@@ -14,6 +13,7 @@
     "react-responsive": "^7.0.0",
     "react-scripts": "3.1.0",
     "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0",
     "redux-undo": "^0.6.1",
     "styled-components": "^4.3.2",
     "uuidv4": "^4.0.0",
@@ -41,5 +41,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "gh-pages": "^2.1.1"
   }
 }
