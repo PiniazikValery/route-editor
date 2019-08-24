@@ -1,4 +1,4 @@
-import { CONSTANTS } from '../actions';
+import { CONSTANTS } from '../../actions';
 import undoable, { distinctState } from 'redux-undo';
 
 const initialState = {
