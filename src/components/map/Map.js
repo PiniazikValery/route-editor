@@ -21,6 +21,12 @@ const Map = memo(({ coords, yMaps, dispatch }) => {
         }
     }, [yMaps, map]);
 
+    useEffect(() => {
+        if (map) {
+            renderRoutes(coords.present.present);
+        }
+    });
+
     const renderRoutes = (routes) => {
         if (routes.length > 1) {
             yMaps.route(toYandexRoutes(routes)).then(
@@ -94,7 +100,6 @@ const Map = memo(({ coords, yMaps, dispatch }) => {
     return (
         <div>
             <YMap id="map" key="map" />
-            {map ? renderRoutes(coords.present.present) : undefined}
         </div>
     );
 });
