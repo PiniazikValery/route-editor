@@ -11,8 +11,8 @@ const CoordItem = memo(({ dispatch, name, id, mobile }) => {
 
     return (
         <CoordItemBox mobile={mobile}>
-            <label>{name}</ label>
-            <DeleteButton mobile={mobile ? 1 : 0} onClick={onDeleteItem} />
+            <label test-data="itemName">{name}</ label>
+            <DeleteButton test-data="deleteItemBtn" mobile={mobile ? 1 : 0} onClick={onDeleteItem} />
         </CoordItemBox>
     );
 });
