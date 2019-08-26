@@ -21,6 +21,7 @@ const ListOfCoords = memo(({ coords, dispatch, mobile }) => {
                 <Droppable droppableId="droppable">
                     {(provided) => (
                         <div
+                            test-data="listOfPlaces"
                             {...provided.droppableProps}
                             ref={provided.innerRef}
                         >
@@ -28,6 +29,8 @@ const ListOfCoords = memo(({ coords, dispatch, mobile }) => {
                                 <Draggable key={coord.id} draggableId={coord.id} index={index}>
                                     {(provided) => (
                                         <div
+                                            test-data="place"
+                                            test-data-coord-id={coord.id}
                                             ref={provided.innerRef}
                                             {...provided.draggableProps}
                                             {...provided.dragHandleProps}
