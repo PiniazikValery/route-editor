@@ -38,7 +38,7 @@ const RouteEditor = memo(({ yMaps, coords }) => {
     return (
         <div test-data="routeEditor">
             {yMaps ? [
-                <RouteEditorItemsholder key="desktop" mobile={isMobile}>
+                <RouteEditorItemsholder test-data="desktopItemsHolder" key="desktop" mobile={isMobile}>
                     <CoordsSetter />
                     <Desktop>
                         <ListOfCoords />
@@ -46,7 +46,7 @@ const RouteEditor = memo(({ yMaps, coords }) => {
                 </RouteEditorItemsholder>,
                 <Mobile key="mobile">
                     {isMobileListOfRoutesOpen ? <ListOfCoords test-data="mobileListOfCoords" mobile={isMobile} /> : <div />}
-                    <div onClick={OpenCloseMobileListOfRoutes}>
+                    <div test-data="openListOfCoordsBtn" onClick={OpenCloseMobileListOfRoutes}>
                         {coords.present.present.length >= 1 ? (isMobileListOfRoutesOpen ? <CloseIcon /> : <HamburgerIcon />) : undefined}
                     </div>
                 </Mobile>

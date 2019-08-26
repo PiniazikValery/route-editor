@@ -1,6 +1,6 @@
 import React from 'react';
-import { act } from 'react-test-renderer'
-import { mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
+import { act } from 'react-dom/test-utils';
 import deviseSizes from '../../responsiveDesign/deviceSizes';
 import { addCoord, setYMapsApi } from '../../actions';
 import { YMapsMock } from '../../testMocks';
@@ -19,6 +19,8 @@ describe('RouteEditor component', () => {
     let store, wrapper;
     const routeEditorLocator = "[test-data='routeEditor']";
     const mobileListOfCoordsLocator = "[test-data='mobileListOfCoords']";
+    const desktopItemsHolderLocator = "[test-data='desktopItemsHolder']";
+    const openListOfCoordsBtnLocator = "[test-data='openListOfCoordsBtn']";
     const yMapsApi = new YMapsMock();
 
     beforeEach(() => {
@@ -26,7 +28,7 @@ describe('RouteEditor component', () => {
         store.dispatch(addCoord('Tes1', 1, 1));
         store.dispatch(addCoord('Tes2', 2, 2));
         store.dispatch(setYMapsApi(yMapsApi));
-        wrapper = mount(<Provider store={store}><RouteEditor /></Provider>);
+        wrapper = shallow(<RouteEditor store={store} />).childAt(0).dive();
     });
 
     it('Should render without errors', () => {
@@ -34,10 +36,18 @@ describe('RouteEditor component', () => {
         expect(routeEditor.length).toBe(1);
     });
 
-    it('Should correctly render mobile elements', () => {
-        resizeWindow(deviseSizes.mobileMaxWidth, 1000);
+    it('Should correctly switch to mobile version', () => {
         wrapper = mount(<Provider store={store}><RouteEditor /></Provider>);
-        console.log(wrapper.debug());
+        act(() => {
+            resizeWindow(deviseSizes.mobileMaxWidth, 1000);
+        });
+        const desktopItemsHolder = wrapper.find(desktopItemsHolderLocator);
+        expect(desktopItemsHolder.get(0).props.mobile).toBe(true);
+    });
+
+    it('Should correctly open mobile list of coords', () => {
+        const openListOfCoordsBtn = wrapper.find(openListOfCoordsBtnLocator);
+        openListOfCoordsBtn.simulate('click');
         const mobileListOfCoords = wrapper.find(mobileListOfCoordsLocator);
         expect(mobileListOfCoords.length).toBe(1);
     });
