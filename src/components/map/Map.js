@@ -99,7 +99,7 @@ const Map = memo(({ coords, yMaps, dispatch }) => {
 
     return (
         <div>
-            <YMap id="map" key="map" />
+            <YMap test-data="yMaps" id="map" key="map" />
         </div>
     );
 });
