@@ -36,25 +36,22 @@ const RouteEditor = memo(({ yMaps, coords }) => {
     }
 
     return (
-        <div>
-            <RouteEditorItemsholder mobile={isMobile}>
-                {yMaps ?
-                    [<div key="coordsSetter">
-                        <CoordsSetter />
-                    </div>,
-                    <div key="listOfCoords">
-                        <Desktop>
-                            <ListOfCoords />
-                        </Desktop>
-                    </div>]
-                    : undefined}
-            </RouteEditorItemsholder>
-            <Mobile>
-                {isMobileListOfRoutesOpen ? <ListOfCoords mobile={isMobile} /> : <div />}
-                <div onClick={OpenCloseMobileListOfRoutes}>
-                    {coords.present.present.length >= 1 ? (isMobileListOfRoutesOpen ? <CloseIcon /> : <HamburgerIcon />) : undefined}
-                </div>
-            </Mobile>
+        <div test-data="routeEditor">
+            {yMaps ? [
+                <RouteEditorItemsholder key="desktop" mobile={isMobile}>
+                    <CoordsSetter />
+                    <Desktop>
+                        <ListOfCoords />
+                    </Desktop>
+                </RouteEditorItemsholder>,
+                <Mobile key="mobile">
+                    {isMobileListOfRoutesOpen ? <ListOfCoords test-data="mobileListOfCoords" mobile={isMobile} /> : <div />}
+                    <div onClick={OpenCloseMobileListOfRoutes}>
+                        {coords.present.present.length >= 1 ? (isMobileListOfRoutesOpen ? <CloseIcon /> : <HamburgerIcon />) : undefined}
+                    </div>
+                </Mobile>
+            ]
+                : undefined}
         </div>
     );
 });
