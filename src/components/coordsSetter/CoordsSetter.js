@@ -12,7 +12,6 @@ const CoordsSetter = memo(({ dispatch, yMaps, mobile }) => {
 
     const onSubmit = async event => {
         if (event.key === 'Enter') {
-            event.preventDefault();
             setCoordName('');
             const { gcoordName, glat, glng, decodeError } = await geocodePlace(coordName);
             if (!decodeError) {
@@ -41,7 +40,7 @@ const CoordsSetter = memo(({ dispatch, yMaps, mobile }) => {
 
     return (
         <CoordSetterForm mobile={mobile}>
-            <NewNodeInput onKeyDown={onSubmit} onChange={handleChangeCoordName} value={coordName} placeholder="New node" />
+            <NewNodeInput test-data="newNodeInput" onKeyDown={onSubmit} onChange={handleChangeCoordName} value={coordName} placeholder="New node" />
         </CoordSetterForm>
     );
 });
