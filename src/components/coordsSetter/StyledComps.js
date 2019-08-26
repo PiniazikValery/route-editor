@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const CoordSetterForm = styled.form`
+export const CoordSetterForm = styled.div`
     transition: 1s;
     z-index:2000;
     position: relative;
